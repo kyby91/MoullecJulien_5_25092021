@@ -1,0 +1,56 @@
+@font-face {
+  font-family: "DMSans";
+  src: url("font/DMSans-Regular.ttf");
+}
+@font-face {
+  font-family: "DMSans-Bold";
+  src: url("font/DMSans-Bold.ttf");
+}
+html {
+  font-family: "DMSans";
+  background-color: slateblue;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  color: #901C1C;
+  justify-content: space-between;
+  width: 70%;
+  font-family: "DMSans-Bold";
+  margin-top: 20px;
+  background-color: yellow;
+}
+
+#logo {
+  font-size: 50px;
+  width: 30%;
+}
+#logo img {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+nav div {
+  border-radius: 20px;
+  border: 1px solid;
+  border-color: #C4C4C4;
+  padding-inline: 10px;
+  padding-block: 3px;
+}
+
+h1 {
+  position: absolute;
+  top: 0px;
+  right: 150px;
+  font-weight: unset;
+  color: #901C1C;
+  font-size: 40px;
+}
+
+/*# sourceMappingURL=style.css.map */
