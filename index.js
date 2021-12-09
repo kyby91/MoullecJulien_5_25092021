@@ -20,15 +20,43 @@ fetch('data.json').then(response => {
     const photographers = data.photographers;
     renderPhotographe(photographers)
 
-    const tags = document.querySelectorAll('nav span')
-    console.log(tags)
+
+
+
+    const tags = document.querySelectorAll('nav div')
+    console.log(photographers)
 
     tags.forEach(element => {
         element.addEventListener('click' , (e) =>{
-          console.log(e.target.dataset.tag)
-          renderPhotographe(photographers)
+          let match = photographers.filter(function(element) {
+            for (let i = 0; i < element.tags.length; i++) {
+              if (element.tags[i] === 'art') {
+                return element;
+              }
+            }
+          });
+          console.log(e)
+          renderPhotographe(match)
+
         })
     });
+
+    
+    
+
+
+    tags.forEach(tag => {
+      if (Array.from(tag.classList).includes('active')) {
+        tag.classList.remove('active')
+        // le reste de ce que tu veux faire quand tu deselectionne un tag  
+        return
+      }
+    
+      tag.classList.add('active')
+      //le reste de ce que tu veux faire quand on selectionne un tag
+      filterPhotographers = photographers.filter(photographer => photographer.tags == tag.innerText) // en partant du principe que le nom de ton tag c'est du texte html  
+    })
+
     
     //si je clique tag
       //tab photographers -> filtre pa rapport au tag -> return filterPhotographers
@@ -36,35 +64,17 @@ fetch('data.json').then(response => {
     //Else plus de tag
       //renderPhotographe(photographers)
 
+
   }).catch(error => {
     // Do something for an error here
     console.error(error)
 });
 
-let recipes = [
-  {
-    'title': 'Jus d\'orange',
-    'ingredients': ['orange']
-  },
-  {
-    'title': 'Tarte aux agrumes',
-    'ingredients': ['farine', 'beurre', 'sucre', 'oeuf', 'citron', 'orange', 'clémentine']
-  },
-  {
-    'title': 'Citronnade',
-    'ingredients': ['eau', 'citron']
-  }
-];
 
-let match = recipes.filter(function(element) {
-  for (let i = 0; i < element.ingredients.length; i++) {
-    if (element.ingredients[i] === 'citron') {
-      return element;
-    }
-  }
-});
 
-console.table(match);
+
+
+
 
 
 function renderPhotographe(photographers){
