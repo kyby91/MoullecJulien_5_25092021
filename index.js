@@ -28,35 +28,59 @@ fetch('data.json').then(response => {
 
     tags.forEach(element => {
         element.addEventListener('click' , (e) =>{
-          let match = photographers.filter(function(element) {
-            for (let i = 0; i < element.tags.length; i++) {
-              if (element.tags[i] === 'art') {
-                return element;
-              }
-            }
-          });
-          console.log(e)
-          renderPhotographe(match)
+          console.log(e.target.dataset.tag)
+          let myTag = e.target.dataset.tag
 
+          //Vérifeir si e.target a la class active
+            //TRUE -> Réunitilaliser a zéro
+              // renderPhotographe(photographers)
+            //FALSE
+              // const tags = document.querySelectorAll('nav div')
+              //Suppirmer les classe active
+              //add class active cliqué e.target
+
+                      // [ 'test', 'portrait']  ('test')        si portrait == test
+              let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
+              console.log(match)
+              // let match = photographers.filter(function(element) {
+              //   for (let i = 0; i < element.tags.length; i++) {
+              //     if (element.tags[i] === 'travel') {
+              //       console.log(element)
+              //       return element;
+              //     }
+              //   }
+              // });
+              renderPhotographe(match)
         })
     });
 
+    function filtered () {
+
+    }
+
+    // tags.forEach(tag => {
+    //   if (Array.from(tag.classList).includes('active')) {
+    //     tag.classList.remove('active')
+    //     return
+    //   } else {    
+    //     tag.classList.add('active')
+    //     let match = photographers.filter(function(element) {
+    //       for (let i = 0; i < element.tags.length; i++) {
+    //         if (element.tags[i] === 'travel') {
+    //           console.log(element)
+    //           return element;
+    //         }
+    //       }
+    //     });
+    //     renderPhotographe(match)
+    //   }
+    // })
+
     
     
 
-
-    tags.forEach(tag => {
-      if (Array.from(tag.classList).includes('active')) {
-        tag.classList.remove('active')
-        // le reste de ce que tu veux faire quand tu deselectionne un tag  
-        return
-      }
     
-      tag.classList.add('active')
-      //le reste de ce que tu veux faire quand on selectionne un tag
-      filterPhotographers = photographers.filter(photographer => photographer.tags == tag.innerText) // en partant du principe que le nom de ton tag c'est du texte html  
-    })
-
+    
     
     //si je clique tag
       //tab photographers -> filtre pa rapport au tag -> return filterPhotographers
@@ -89,7 +113,7 @@ function renderPhotographe(photographers){
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photographer.portrait
-    //"C:\Users\Julien\Desktop\P5\SamplePhotos\PhotographersIDPhotos\TracyGalindo.jpg"
+    "/SamplePhotos/PhotographersIDPhotos/TracyGalindo.jpg"
     div.appendChild(profilepicture)
 
     let h2 = document.createElement('h2')
