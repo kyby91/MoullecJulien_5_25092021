@@ -28,29 +28,37 @@ fetch('data.json').then(response => {
 
     tags.forEach(element => {
         element.addEventListener('click' , (e) =>{
-          console.log(e.target.dataset.tag)
+          console.log(e.target)
           let myTag = e.target.dataset.tag
+          let active = e.target
 
-          //Vérifeir si e.target a la class active
-            //TRUE -> Réunitilaliser a zéro
-              // renderPhotographe(photographers)
-            //FALSE
-              // const tags = document.querySelectorAll('nav div')
-              //Suppirmer les classe active
-              //add class active cliqué e.target
+          let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
+            console.log(match)
 
-                      // [ 'test', 'portrait']  ('test')        si portrait == test
-              let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
-              console.log(match)
-              // let match = photographers.filter(function(element) {
-              //   for (let i = 0; i < element.tags.length; i++) {
-              //     if (element.tags[i] === 'travel') {
-              //       console.log(element)
-              //       return element;
-              //     }
-              //   }
-              // });
-              renderPhotographe(match)
+        
+          renderPhotographe(match)
+          active.classList.add('ok')
+
+
+
+        //Vérifeir si e.target a la class active
+          //TRUE -> Réunitilaliser a zéro
+            // renderPhotographe(photographers)
+          //FALSE
+            // const tags = document.querySelectorAll('nav div')
+            //Suppirmer les classe active
+            //add class active cliqué e.target
+
+                    // [ 'test', 'portrait']  ('test')        si portrait == test
+            
+            // let match = photographers.filter(function(element) {
+            //   for (let i = 0; i < element.tags.length; i++) {
+            //     if (element.tags[i] === 'travel') {
+            //       console.log(element)
+            //       return element;
+            //     }
+            //   }
+            // });
         })
     });
 
