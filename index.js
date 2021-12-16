@@ -1,27 +1,8 @@
-//DOM
-const data1 = document.getElementById('data1')
-const newElt = document.createElement("div")
-const elt = document.querySelectorAll('main')
-
-
-
-
-// document.addEnventListener
-
-// tags.addEnventListener
-
-
-
-
-
 fetch('data.json').then(response => {
     return response.json();
   }).then(data => {
     const photographers = data.photographers;
     renderPhotographe(photographers)
-
-
-
 
     const tags = document.querySelectorAll('nav div')
     console.log(photographers)
@@ -30,14 +11,19 @@ fetch('data.json').then(response => {
         element.addEventListener('click' , (e) =>{
           console.log(e.target)
           let myTag = e.target.dataset.tag
-          let active = e.target
+          let active = e.target.classList
 
-          let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
+          
+
+          if (Array.from(element.classList).includes('active')) {
+            renderPhotographe(photographers)
+            active.remove('active')
+          } else {
+            let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
             console.log(match)
-
-        
-          renderPhotographe(match)
-          active.classList.add('ok')
+            active.add('active')
+            renderPhotographe(match)
+          }
 
 
 
@@ -62,39 +48,6 @@ fetch('data.json').then(response => {
         })
     });
 
-    function filtered () {
-
-    }
-
-    // tags.forEach(tag => {
-    //   if (Array.from(tag.classList).includes('active')) {
-    //     tag.classList.remove('active')
-    //     return
-    //   } else {    
-    //     tag.classList.add('active')
-    //     let match = photographers.filter(function(element) {
-    //       for (let i = 0; i < element.tags.length; i++) {
-    //         if (element.tags[i] === 'travel') {
-    //           console.log(element)
-    //           return element;
-    //         }
-    //       }
-    //     });
-    //     renderPhotographe(match)
-    //   }
-    // })
-
-    
-    
-
-    
-    
-    
-    //si je clique tag
-      //tab photographers -> filtre pa rapport au tag -> return filterPhotographers
-      //renderPhotographe(filterPhotographers)
-    //Else plus de tag
-      //renderPhotographe(photographers)
 
 
   }).catch(error => {
