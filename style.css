@@ -14,26 +14,27 @@ header {
   display: flex;
   align-items: center;
   color: #901C1C;
-  justify-content: space-between;
   width: 70%;
   font-family: "DMSans-Bold";
   margin-top: 20px;
-  background-color: yellow;
 }
 
 #logo {
-  font-size: 50px;
+  font-size: 70px;
   width: 30%;
+  margin-left: 11%;
 }
 #logo img {
   margin-left: -10px;
   margin-right: -10px;
+  width: 50px;
 }
 
 nav {
   display: flex;
-  justify-content: space-between;
-  width: 70%;
+  width: 80%;
+  margin-top: 10px;
+  justify-content: center;
 }
 nav div {
   border-radius: 20px;
@@ -41,11 +42,13 @@ nav div {
   border-color: #C4C4C4;
   padding-inline: 10px;
   padding-block: 3px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 h1 {
   position: absolute;
-  top: 0px;
+  top: 13px;
   right: 150px;
   font-weight: unset;
   color: #901C1C;
@@ -57,55 +60,71 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  justify-content: space-around;
   text-align: center;
   margin-top: 200px;
 }
-main div {
+main a {
+  text-decoration: none;
   width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
 }
-main div img {
+main a img {
   object-fit: cover;
   order: 1;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border: none;
-  -moz-border-radius: 150px;
-  -webkit-border-radius: 150px;
-  border-radius: 150px;
+  -moz-border-radius: 400px;
+  -webkit-border-radius: 400px;
+  border-radius: 400px;
 }
-main div h2 {
+main a h2 {
   order: 2;
   font-size: 50px;
   color: #D3573C;
   font-weight: unset;
 }
-main div .localisation {
+main a .localisation {
   order: 3;
   color: #901C1C;
   font-size: 20px;
   margin-top: -30px;
 }
-main div .tagline {
+main a .tagline {
   order: 4;
   margin-top: -10px;
   font-size: 15px;
+  color: black;
 }
-main div .price {
+main a .price {
   order: 5;
   margin-top: -10px;
   font-size: 15px;
   color: gray;
 }
-main div .filter {
+main a .filter {
   order: 6;
-  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+}
+main a .filter p {
+  margin-left: 4px;
+  margin-right: 4px;
+  border: solid 1px;
+  color: #901C1C;
+  font-family: "DMSans-Bold";
+  border-color: #d1d1d1;
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.active {
+  background-color: #901C1C;
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */
