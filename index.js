@@ -5,7 +5,6 @@ fetch('data.json').then(response => {
     renderPhotographe(photographers)
 
     const tags = document.querySelectorAll('nav div')
-    console.log(photographers)
 
     tags.forEach(element => {
         element.addEventListener('click' , (e) =>{
@@ -13,7 +12,7 @@ fetch('data.json').then(response => {
           let myTag = e.target.dataset.tag
           let active = e.target.classList
 
-          
+          console.log(tags)
 
           if (Array.from(element.classList).includes('active')) {
             renderPhotographe(photographers)
@@ -21,6 +20,9 @@ fetch('data.json').then(response => {
           } else {
             let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
             console.log(match)
+            tags.forEach(element=> {
+              element.classList.remove('active')
+            })
             active.add('active')
             renderPhotographe(match)
           }
@@ -67,10 +69,13 @@ function renderPhotographe(photographers){
   document.getElementById("main").innerHTML = "";
 
   photographers.forEach(photographer => {
+
+    let lien = document.createElement('a')
+    lien.href = 'photographer.html?id=' + photographer.id
     
     let div = document.createElement('div')
     div.setAttribute('id', 'id-' + photographer.id)
-    console.log(div)
+    lien.appendChild(div)
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photographer.portrait
@@ -106,6 +111,6 @@ function renderPhotographe(photographers){
     
     div.appendChild(div1)
 
-    document.getElementById("main").appendChild(div)
+    document.getElementById("main").appendChild(lien)
   });
 }
