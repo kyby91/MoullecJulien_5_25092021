@@ -49,14 +49,20 @@ fetch('data.json').then(response => {
     //affichage de ses photos
 
     const photos = data.media
-    console.log(photos)
 
     let match = photos.filter( photo => photo.photographerId == urlId )
     console.log(match)
 
-    affichagePhotos(match)
+    const facto = factoryMediaElt()
+    match.forEach( item => {
+        // Element image or vidéo
+        console.log(facto.choiceElt(item) )
 
+        // Conception de la suite de HTML (Carte media)
+        //Appendchilm
+    })
 
+    
 
     //->Chercher le bon photographe
         //Chercher dans mon tableau photographe celui qui a l'id = urlId
@@ -83,3 +89,49 @@ function affichagePhotos(photos) {
         secDiv.appendChild(picture)
     })
 }
+
+
+function factoryMediaElt() {
+
+    function eltImage(data){
+        //Création délemment image HTML
+        return data;
+    }
+
+
+    function choiceElt(data){
+        console.log(data.image)
+        let elt;
+        if(data.image){   
+            // elt = 'image'
+            elt = this.eltImage('image')
+            
+        }else{
+            elt = 'vidéo'
+        }
+
+        return elt;
+
+        // console.log(elt)
+        // If image ou vidéo (HTML)
+    }
+
+
+    return {
+        eltImage,
+        choiceElt
+    }
+
+}
+
+
+
+
+const object = {
+    name : "thomas",
+    myFonction() {
+        console.log(this.name)
+    }
+}
+
+object.myFonction()
