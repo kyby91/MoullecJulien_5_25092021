@@ -23,7 +23,7 @@
           <h2>Contactez-moi</h2>
           <img src="close.svg" onclick="closeModal()" />
         </header>
-				<form>
+				<form onsubmit="return checkGlobalValidation()">
 					<div>
 						<label>Prénom</label>
 						<input id="first" />
@@ -37,7 +37,7 @@
             <label>Votre message</label>
 						<input id="message" />
 					</div>
-          <input class="btn-submit button"  type="submit"   value="Envoyer" onclick="checkGlobalValidation()"/>
+          <input class="btn-submit button"  type="submit"  value="Envoyer" />
 				</form>
 			</div>
 		</div>

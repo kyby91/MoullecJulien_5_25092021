@@ -79,7 +79,8 @@ let inputState = {
 }
 
 //fonction regroupant tout les champs pour valider ou non
-function checkGlobalValidation(event) {
+function checkGlobalValidation() {
+  // e.preventDefault()
   checkFirstElementValue()
   checkLastElementValue()
   checkEmail()
@@ -87,10 +88,12 @@ function checkGlobalValidation(event) {
   const hasUnvalidProperty = Object.keys(inputState).find(key => inputState[key] === false);
   // si une ou plusieurs fausse la validation n'est pas posiible
   if(hasUnvalidProperty) {
-    event.preventDefault()
+    // e.preventDefault()
+    
     // si toute vraie alors disparition des champs et apparition du text et du bouton
   } else {
-    event.preventDefault()
+    // e.preventDefault()
   }
+  return false;
 }
 console.log(validateBtn);
