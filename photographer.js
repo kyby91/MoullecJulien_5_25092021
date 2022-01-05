@@ -64,9 +64,17 @@ fetch('data.json').then(response => {
         let description = document.createElement('p')
         description.innerHTML = item.title
 
+        let heart = document.createElement('p')
+        heart.innerHTML = item.likes
+
+        let icon = document.createElement('p')
+        icon.innerHTML = '<i class="fas fa-heart"></i>';
+
         //Appendchilm
-        div3.appendChild(description)
         div3.appendChild(mediaElt)
+        div3.appendChild(description)
+        div3.appendChild(heart)
+        div3.appendChild(icon)
         
     })
 

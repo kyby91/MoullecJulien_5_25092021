@@ -79,7 +79,6 @@ function renderPhotographe(photographers){
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photographer.portrait
-    "/SamplePhotos/PhotographersIDPhotos/TracyGalindo.jpg"
     div.appendChild(profilepicture)
 
     let h2 = document.createElement('h2')
