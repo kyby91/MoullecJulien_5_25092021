@@ -4,21 +4,64 @@ const firstDiv = document.querySelector('main div')
 const urlParams = new URLSearchParams(window.location.search)
 const urlId = urlParams.get("id")
 const secDiv = document.getElementById('Photos')
-
+const contact = document.getElementById('contact')
+const lightbox = document.getElementById('lightbox')
+const boxContainer = document.getElementById('lightbox__container')
+const closeLightbox = document.getElementById('lightbox__close')
+const nextLightbox = document.getElementById ('lightbox__next')
+const prevLightbox = document.getElementById('lightbox__prev')
 
 fetch('data.json').then(response => {
     return response.json();
   }).then(data => {
-      //info photographe
-    const photographers = data.photographers;
+
+    //info photographe
+    const photographers = data.photographers;    
+    const photograph = photographers.find(photographe => photographe.id == urlId)
+    afficherInfo(photograph)
+
+
+    //affichage de ses photos + lightbox
+    const photos = data.media
+    let match = photos.filter( photo => photo.photographerId == urlId )
+    afficherPhotos(match, photograph)   
+    console.log(match.length);
+
+
+    //Contact ajout nom
+    contact.innerText = 'Contactez-moi' + ' ' +  photograph.name
+
+
+    // ///lightbox
+    // console.log(match.indexOF(1));
+    console.log(match);
+    
+    //fermeture lightbox avec la croix
+    closeLightbox.addEventListener('click', e => {
+        lightbox.classList.remove('active')
+    })
+
+    // window.onload = ()=>{
+    //     for (let i = 0; i < gallery.length; i++) {
+    //         gallery[i].onclick = ()=>{
+    //             console.log(i);
+    //             lightbox.classList.add('active');
+    //         }
+            
+    //     }
+    // }
+
 
    
     
-    const photograph = photographers.find(photographe => photographe.id == urlId)
 
-    console.log( photograph.name.split(' '))
+}).catch(error=> {
+    console.error(error)
+})
 
 
+
+function afficherInfo (photograph){
     let div1 = document.createElement('div')
     div1.setAttribute('id', 'photograph-info')
     firstDiv.appendChild(div1)
@@ -36,30 +79,26 @@ fetch('data.json').then(response => {
     div1.appendChild(p)
 
     let div2 = document.createElement('div')
-    div2.setAttribute('id', 'photograh-photo')
+    div2.setAttribute('id', 'photograph-photo')
     firstDiv.appendChild(div2)
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photograph.portrait 
     div2.appendChild(profilepicture)
 
+}
 
 
-    //affichage de ses photos
 
-    const photos = data.media
-
-    let match = photos.filter( photo => photo.photographerId == urlId )
-
+function afficherPhotos (match, photograph) {
     const facto = factoryMediaElt()
     match.forEach( item => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
-        console.log(mediaElt)
         // Conception de la suite de HTML (Carte media)
         let div3 = document.createElement('div')
+        div3.setAttribute('class', 'photo-container')
         secDiv.appendChild(div3)
-        console.log(secDiv);
 
         let description = document.createElement('p')
         description.innerHTML = item.title
@@ -72,21 +111,21 @@ fetch('data.json').then(response => {
 
         //Appendchilm
         div3.appendChild(mediaElt)
-        div3.appendChild(description)
-        div3.appendChild(heart)
-        div3.appendChild(icon)
+
+        let divsub = document.createElement('div')
+        divsub.setAttribute('class', 'photo-info')
+        div3.appendChild(divsub)
+
+        divsub.appendChild(description)
+
+        let divlike = document.createElement('div')
+        divsub.appendChild(divlike)
+
+        divlike.appendChild(heart)
+        divlike.appendChild(icon)
         
     })
-
-
-
-
-}).catch(error=> {
-    console.error(error)
-})
-
-// "/SamplePhotos/Ellie Rose/Architecture_Connected_Curves.jpg"
-// "\SamplePhotos\Nabeel\Travel_On_the_Road.jpg"
+}
 
 
 
@@ -94,30 +133,49 @@ fetch('data.json').then(response => {
 function factoryMediaElt() {
 
 
-    function eltImage(data , photograph){
+    function eltImage(match , photograph){
         //Création délemment image HTML
         let picture = document.createElement('img')
         const words = photograph.name.split(' ')
-        // picture.src = 'SamplePhotos/' + data.image
-        picture.src = 'SamplePhotos/' + words[0] + '/' + data.image
+        // picture.src = 'SamplePhotos/' + match.image
+        picture.src = 'SamplePhotos/' + words[0] + '/' + match.image    
+        
+        picture.addEventListener('click', e => {
+            lightbox.classList.add('active')
+            const img = document.createElement('img')
+            img.src = picture.src
+            while (boxContainer.firstChild) {
+                boxContainer.removeChild(boxContainer.firstChild)
+            }
+            boxContainer.appendChild(img)
+         })
         return picture;
     }
 
-    function eltVideo(data , photograph){
+    function eltVideo(match , photograph){
         let video = document.createElement('video')
         const words = photograph.name.split(' ')
-        video.src = 'SamplePhotos/' + words[0] + '/' + data.video
+        video.src = 'SamplePhotos/' + words[0] + '/' + match.video
+        video.addEventListener('click', e => {
+            lightbox.classList.add('active')
+            const play = document.createElement('video')
+            play.src = video.src
+            while (boxContainer.firstChild) {
+                boxContainer.removeChild(boxContainer.firstChild)
+            }
+            boxContainer.appendChild(play)
+         })
         return video;
     }
 
 
-    function choiceElt(data , photograph){
+    function choiceElt(match , photograph){
         let elt;
-        if(data.image){   
+        if(match.image){   
             // elt = 'image'
-            elt = this.eltImage(data , photograph)
+            elt = this.eltImage(match , photograph)
         }else{
-            elt = this.eltVideo(data , photograph)
+            elt = this.eltVideo(match , photograph)
         }
         return elt;
 

@@ -4,7 +4,9 @@ const last = document.getElementById("last")
 const email = document.getElementById("email")
 const message = document.getElementById("message")
 const validateBtn = document.getElementsByClassName("contact_button")
+const validation = document.getElementById('validation')
 
+validation.style.display = "none"
 
 function displayModal() {
     const modal = document.getElementById("contact_modal");
@@ -93,7 +95,13 @@ function checkGlobalValidation() {
     // si toute vraie alors disparition des champs et apparition du text et du bouton
   } else {
     // e.preventDefault()
+    document.querySelector("#modal-form").style.display = "none";
+    closeModal();
+    validation.style.display = "block"
+    console.log("Prénom : "+ first.value)
+    console.log("Nom : "+ last.value)
+    console.log("E-mail : "+ email.value)
+    console.log("Message : "+ message.value)
   }
   return false;
 }
-console.log(validateBtn);
