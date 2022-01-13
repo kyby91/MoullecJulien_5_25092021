@@ -9,23 +9,29 @@
     <title>Fisheye - photographe </title>
   </head>
   <body>
-    <header>
+    <header id="header">
       <img src="logo.png" class="logo" />
     </header>
     <main id="main">
       <div class="photograph-header">
         <button id="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+      <label for="tri-select">Trier par</label>
+      <select name="tri" id="tri-select">
+        <option value="Popularité" selected></option>
+        <option value="Date"></option>
+        <option value="Titre"></option>
+      </select>
       <div id="Photos"></div>
     </main>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
-          <h2>Contactez-moi</h2>
+          <h2 id="contact"></h2>
           <img src="close.svg" onclick="closeModal()" />
         </header>
-				<form onsubmit="return checkGlobalValidation()">
-					<div>
+				<form id="modal-form" onsubmit="return checkGlobalValidation()">
+					<div id='modal-input'>
 						<label>Prénom</label>
 						<input id="first" />
             <p id="firstError"></p>
@@ -36,13 +42,24 @@
 						<input id="email" />
             <p id="emailError"></p>
             <label>Votre message</label>
-						<input id="message" />
+						<input type="text" id="message"/>
 					</div>
-          <input class="btn-submit button"  type="submit"  value="Envoyer" />
+          <input id="btn-submit"  type="submit"  value="Envoyer"/>
 				</form>
+        <section>
+          <p id="validation">Votre demande de contact a bien été enregistré</p>
+        </section>
 			</div>
 		</div>
-    <script src="contactForm.js"></script>
-    <script src="photographer.js"></script>
+    <div id="lightbox">
+      <button id="lightbox__close">Fermer</button>
+      <button id="lightbox__next">Suivant</button>
+      <button id="lightbox__prev">Précédent</button>
+      <div id="lightbox__container">
+        <p>hebhfbde</p>
+      </div>
+    </div>
   </body>
+  <script src="contactForm.js"></script>
+  <script src="photographer.js"></script>
 </html>
