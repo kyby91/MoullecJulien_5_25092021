@@ -30,6 +30,27 @@ html {
   height: 50px;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+}
+main label {
+  font-family: "DMSans";
+  margin-left: 100px;
+}
+main select {
+  width: 10%;
+  background-color: #911C1C;
+  color: #FFFFFF;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  font-family: "DMSans-Bold";
+  font-size: 18px;
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+
 #Photos {
   display: flex;
   flex-wrap: wrap;
@@ -201,8 +222,8 @@ form input {
   width: 50px;
   height: 100%;
   border: none;
-  position: fixed;
-  right: 160px;
+  position: relative;
+  left: 1155px;
   margin-top: -14px;
   z-index: 511;
   text-indent: -30000px;
@@ -211,20 +232,20 @@ form input {
 
 #lightbox__prev {
   right: auto;
-  left: 170px;
+  left: -5px;
   transform: rotate(180deg);
   text-indent: -30000px;
 }
 
 #lightbox__close {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background: url(closelght.svg) center center/100% 100% no-repeat;
   border: none;
-  position: fixed;
+  position: relative;
   text-indent: -30000px;
-  top: 150px;
-  right: 14%;
+  bottom: 464px;
+  left: 1200px;
   cursor: pointer;
   z-index: 515;
 }
@@ -241,20 +262,48 @@ form input {
   align-items: center;
   display: none;
 }
+#lightbox #container {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 #lightbox.active {
   display: flex;
 }
 
+#lightbox__container {
+  display: flex;
+  flex-direction: column;
+}
 #lightbox__container img, #lightbox__container video {
   width: 1050px;
   height: 900px;
   object-fit: cover;
   border-radius: 5px;
+  order: -1;
 }
 #lightbox__container p {
   font-size: 24px;
   color: #901C1C;
+  order: 2;
+}
+
+#like-prix {
+  position: fixed;
+  display: flex;
+  bottom: -10px;
+  right: 30px;
+  background-color: #DB8876;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: normal;
+}
+#like-prix p {
+  margin-right: 30px;
 }
 
 /*# sourceMappingURL=photographer.css.map */

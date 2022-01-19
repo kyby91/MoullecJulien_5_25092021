@@ -10,6 +10,9 @@ const boxContainer = document.getElementById('lightbox__container')
 const closeLightbox = document.getElementById('lightbox__close')
 const nextLightbox = document.getElementById ('lightbox__next')
 const prevLightbox = document.getElementById('lightbox__prev')
+let triBtn = document.getElementById('tri-select')
+const info = document.getElementById('like-prix')
+
 
 fetch('data.json').then(response => {
     return response.json();
@@ -24,8 +27,8 @@ fetch('data.json').then(response => {
     //affichage de ses photos + lightbox
     const photos = data.media
     let match = photos.filter( photo => photo.photographerId == urlId )
-    afficherPhotos(match, photograph)   
-    console.log(match.length);
+    afficherPhotos(match, photograph) 
+    console.log(match);
 
 
     //Contact ajout nom
@@ -33,27 +36,23 @@ fetch('data.json').then(response => {
 
 
     // ///lightbox
+    afficherLightbox(photograph)
+
     // console.log(match.indexOF(1));
-    console.log(match);
     
     //fermeture lightbox avec la croix
     closeLightbox.addEventListener('click', e => {
         lightbox.classList.remove('active')
     })
-
-    // window.onload = ()=>{
-    //     for (let i = 0; i < gallery.length; i++) {
-    //         gallery[i].onclick = ()=>{
-    //             console.log(i);
-    //             lightbox.classList.add('active');
-    //         }
-            
-    //     }
-    // }
-
-
    
+    // triBtn.addEventListener('change', triData())
+    triBtn.addEventListener('change', () => {
+        triData(match , triBtn);
+        afficherPhotos(match, photograph)
+    })
     
+
+    afficherLikePrix(match, photograph)
 
 }).catch(error=> {
     console.error(error)
@@ -91,13 +90,14 @@ function afficherInfo (photograph){
 
 
 function afficherPhotos (match, photograph) {
-    const facto = factoryMediaElt()
-    match.forEach( item => {
+    const facto = factoryMediaElt(match)
+    match.forEach( (item , index) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
         // Conception de la suite de HTML (Carte media)
         let div3 = document.createElement('div')
         div3.setAttribute('class', 'photo-container')
+        div3.setAttribute('data-index', index)
         secDiv.appendChild(div3)
 
         let description = document.createElement('p')
@@ -129,9 +129,29 @@ function afficherPhotos (match, photograph) {
 
 
 
+function afficherLightbox (photograph) {
+    const media = secDiv.querySelectorAll('img, video')
+    console.log(media);
+    
+    let currentMedia;
+    media.forEach(element => {
+        element.addEventListener('click', e =>{
+            console.log(e.target);
+            lightbox.classList.add('active')
+            currentMedia = element
+            let title = photograph.title
+            boxContainer.appendChild(currentMedia)
+            console.log(element);
+        })
+        nextLightbox.addEventListener('click', ()=>{
+            currentMedia.src = media[(media.indexOf(currentMedia) +1) || 0]
+        })
+    })
+}
+
+
 
 function factoryMediaElt() {
-
 
     function eltImage(match , photograph){
         //Création délemment image HTML
@@ -139,16 +159,6 @@ function factoryMediaElt() {
         const words = photograph.name.split(' ')
         // picture.src = 'SamplePhotos/' + match.image
         picture.src = 'SamplePhotos/' + words[0] + '/' + match.image    
-        
-        picture.addEventListener('click', e => {
-            lightbox.classList.add('active')
-            const img = document.createElement('img')
-            img.src = picture.src
-            while (boxContainer.firstChild) {
-                boxContainer.removeChild(boxContainer.firstChild)
-            }
-            boxContainer.appendChild(img)
-         })
         return picture;
     }
 
@@ -156,15 +166,6 @@ function factoryMediaElt() {
         let video = document.createElement('video')
         const words = photograph.name.split(' ')
         video.src = 'SamplePhotos/' + words[0] + '/' + match.video
-        video.addEventListener('click', e => {
-            lightbox.classList.add('active')
-            const play = document.createElement('video')
-            play.src = video.src
-            while (boxContainer.firstChild) {
-                boxContainer.removeChild(boxContainer.firstChild)
-            }
-            boxContainer.appendChild(play)
-         })
         return video;
     }
 
@@ -189,4 +190,78 @@ function factoryMediaElt() {
         choiceElt
     }
 
+}
+
+
+
+function triData (match, triBtn) {
+    console.log('ok')
+    document.getElementById("Photos").innerHTML = "";
+    
+    // let triBtnElt = document.getElementById('tri-select')
+    // var value = triBtnElt.options[triBtnElt.selectedIndex].value;
+    var value = triBtn.options[triBtn.selectedIndex].value;
+    console.log(value)
+    console.log(match)
+
+    if (value === 'Date') {
+        function SortArray(x, y){
+            if (x.date > y.date) {return -1;}
+            if (x.date < y.date) {return 1;}
+            return 0;
+        }
+        match = match.sort(SortArray);
+        console.log(match);
+
+    } else if (value === 'Popularité') {
+        function SortArray(x, y){
+            if (x.likes > y.likes) {return -1;}
+            if (x.likes < y.likes) {return 1;}
+            return 0;
+        }
+        match = match.sort(SortArray);
+        console.log(match);
+
+    } else if (value === 'Titre') {
+
+        function SortArray(x, y){
+            if (x.title < y.title) {return -1;}
+            if (x.title > y.title) {return 1;}
+            return 0;
+        }
+        match = match.sort(SortArray);
+        console.log(match);
+    }
+}
+
+
+
+function afficherLikePrix(match, photograph) {
+    //prix
+    let prix = document.createElement('p')
+    prix.innerHTML = photograph.price + '€/jour'
+    info.appendChild(prix)
+
+    //like
+    totalLikes = function(){
+        var total = 0;
+        for (let i = 0; i < match.length; i++) {
+        total = total + match[i].likes;        
+        }
+        return total;
+    }
+    console.log(totalLikes(match));
+
+    let sumLike = document.createElement('p')
+    sumLike.innerHTML = totalLikes(match)
+    info.appendChild(sumLike)
+
+    // modification nombre de like
+
+    // const bb = afficherPhotos(match)
+    // console.log(bb);
+
+    
+
+   
 }
