@@ -33,6 +33,7 @@ html {
 main {
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
 }
 main label {
   font-family: "DMSans";
@@ -304,6 +305,7 @@ form input {
 }
 #like-prix p {
   margin-right: 30px;
+  margin-left: 30px;
 }
 
 /*# sourceMappingURL=photographer.css.map */

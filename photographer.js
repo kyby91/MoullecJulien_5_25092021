@@ -91,6 +91,8 @@ function afficherInfo (photograph){
 
 function afficherPhotos (match, photograph) {
     const facto = factoryMediaElt(match)
+    let coeurVide = document.createElement('p')
+    let coeur = document.createElement('p')
     match.forEach( (item , index) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
@@ -105,11 +107,24 @@ function afficherPhotos (match, photograph) {
 
         let heart = document.createElement('p')
         heart.innerHTML = item.likes
+        
 
-        let icon = document.createElement('p')
-        icon.innerHTML = '<i class="fas fa-heart"></i>';
+        
+        coeur.innerHTML = '<i class="fas fa-heart"></i>'
+        coeur.style.display = 'none'
 
-        //Appendchilm
+        
+        coeurVide.innerHTML = '<i class="far fa-heart"></i>'
+
+        
+        // coeurVide.forEach(element=>{
+        //     element.addEventListener('click', e =>{
+        //         console.log('ok');
+        //     })
+        // })
+
+
+        //Appendchild
         div3.appendChild(mediaElt)
 
         let divsub = document.createElement('div')
@@ -122,9 +137,31 @@ function afficherPhotos (match, photograph) {
         divsub.appendChild(divlike)
 
         divlike.appendChild(heart)
-        divlike.appendChild(icon)
+        divlike.appendChild(coeur)
+        divlike.appendChild(coeurVide)
         
     })
+    const zz = document.querySelectorAll('.far')
+    console.log(zz);
+
+    zz.forEach(element => {
+        element.addEventListener('click', e=>{
+            coeurVide.style.display = 'none'
+            coeur.style.display = 'block'
+            console.log(e.target);
+        })
+    });
+
+
+    const yy = document.querySelectorAll('.fas')
+    console.log(yy);
+    yy.forEach(element => {
+        element.addEventListener('click', e=>{
+            coeurVide.style.display = 'block'
+            coeur.style.display = 'none'
+        })
+    });
+
 }
 
 
@@ -236,13 +273,9 @@ function triData (match, triBtn) {
 
 
 
-function afficherLikePrix(match, photograph) {
-    //prix
-    let prix = document.createElement('p')
-    prix.innerHTML = photograph.price + '€/jour'
-    info.appendChild(prix)
-
+function afficherLikePrix(match, photograph, facto) {
     //like
+    
     totalLikes = function(){
         var total = 0;
         for (let i = 0; i < match.length; i++) {
@@ -258,10 +291,20 @@ function afficherLikePrix(match, photograph) {
 
     // modification nombre de like
 
-    // const bb = afficherPhotos(match)
+    ///ajout de like
+    const ok = document.getElementById('header')
+    op = ok.querySelector('img')
+    console.log(op);
+    op.addEventListener('click', e=>{
+        totalLikes()
+    })
+    // const bb = afficherPhotos(facto)
     // console.log(bb);
 
-    
+    //prix
+    let prix = document.createElement('p')
+    prix.innerHTML = photograph.price + '€/jour'
+    info.appendChild(prix)
 
-   
+       
 }
