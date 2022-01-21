@@ -91,8 +91,10 @@ function afficherInfo (photograph){
 
 function afficherPhotos (match, photograph) {
     const facto = factoryMediaElt(match)
-    let coeurVide = document.createElement('p')
-    let coeur = document.createElement('p')
+    let coeurVide 
+    let coeur 
+    let divlike
+    let arrayLikes = {}
     match.forEach( (item , index) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
@@ -105,24 +107,18 @@ function afficherPhotos (match, photograph) {
         let description = document.createElement('p')
         description.innerHTML = item.title
 
+        //div like
         let heart = document.createElement('p')
-        heart.innerHTML = item.likes
-        
-
-        
+        heart.innerHTML = item.likes        
+        coeurVide = document.createElement('p')
+        coeur = document.createElement('p')
+        coeurVide.innerHTML = '<i class="far fa-heart"></i>'        
         coeur.innerHTML = '<i class="fas fa-heart"></i>'
         coeur.style.display = 'none'
 
         
-        coeurVide.innerHTML = '<i class="far fa-heart"></i>'
-
+        arrayLikes[item.id] = item.likes
         
-        // coeurVide.forEach(element=>{
-        //     element.addEventListener('click', e =>{
-        //         console.log('ok');
-        //     })
-        // })
-
 
         //Appendchild
         div3.appendChild(mediaElt)
@@ -133,7 +129,8 @@ function afficherPhotos (match, photograph) {
 
         divsub.appendChild(description)
 
-        let divlike = document.createElement('div')
+        divlike = document.createElement('div')
+        divlike.setAttribute('id', item.id)
         divsub.appendChild(divlike)
 
         divlike.appendChild(heart)
@@ -141,27 +138,31 @@ function afficherPhotos (match, photograph) {
         divlike.appendChild(coeurVide)
         
     })
-    const zz = document.querySelectorAll('.far')
-    console.log(zz);
 
-    zz.forEach(element => {
+    //click coeur plein(liké)
+    const allCoeur = document.querySelectorAll('.fas')
+    console.log(allCoeur);
+    allCoeur.forEach(element => {
         element.addEventListener('click', e=>{
-            coeurVide.style.display = 'none'
-            coeur.style.display = 'block'
+            coeurVide.style.display = 'block'
+            coeur.style.display = 'none'
             console.log(e.target);
         })
     });
 
-
-    const yy = document.querySelectorAll('.fas')
-    console.log(yy);
-    yy.forEach(element => {
+    // click coeur vide (pas liké)
+    const allCoeurVide = document.querySelectorAll('.far')
+    console.log(allCoeurVide);
+    allCoeurVide.forEach(element => {
         element.addEventListener('click', e=>{
-            coeurVide.style.display = 'block'
-            coeur.style.display = 'none'
+            coeurVide.style.display = 'none'
+            coeur.style.display = 'block'
+            console.log(e.path[2].id);
         })
     });
 
+
+    console.log(arrayLikes);
 }
 
 
@@ -171,18 +172,35 @@ function afficherLightbox (photograph) {
     console.log(media);
     
     let currentMedia;
-    media.forEach(element => {
+    media.forEach( (element, index) => {
         element.addEventListener('click', e =>{
-            console.log(e.target);
+            // console.log(e);
             lightbox.classList.add('active')
-            currentMedia = element
+            currentMedia = element.cloneNode(true)
             let title = photograph.title
             boxContainer.appendChild(currentMedia)
-            console.log(element);
+            // console.log(e.target.parentNode);
+
+            nextLightbox.addEventListener('click', ()=>{
+                // let media2 = Array.from(media)
+                // console.log(media2)
+                // console.log(media2[2])
+                console.log(currentMedia)
+                // console.log(currentMedia.target)
+                // console.log(media2.indexOf(currentMedia))
+                let courantIndex = index + 1;
+                if(media.length <= courantIndex){
+                    courantIndex = 0;
+                }
+               
+                
+                let base = media[courantIndex]
+                console.log(base)
+                // currentMedia.src = media[(media.indexOf(currentMedia) +1) || 0]
+                // console.log(media2[(media2.indexOf(currentMedia) +1) || 0])
+            })
         })
-        nextLightbox.addEventListener('click', ()=>{
-            currentMedia.src = media[(media.indexOf(currentMedia) +1) || 0]
-        })
+        
     })
 }
 
