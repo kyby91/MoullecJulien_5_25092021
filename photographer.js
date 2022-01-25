@@ -28,7 +28,6 @@ fetch('data.json').then(response => {
     const photos = data.media
     let match = photos.filter( photo => photo.photographerId == urlId )
     afficherPhotos(match, photograph) 
-    console.log(match);
 
 
     //Contact ajout nom
@@ -94,6 +93,7 @@ function afficherPhotos (match, photograph) {
     let coeurVide 
     let coeur 
     let divlike
+    let heart
     let arrayLikes = {}
     match.forEach( (item , index) => {
         // Element image or vidéo
@@ -108,10 +108,13 @@ function afficherPhotos (match, photograph) {
         description.innerHTML = item.title
 
         //div like
-        let heart = document.createElement('p')
-        heart.innerHTML = item.likes        
+        heart = document.createElement('p')
+        heart.innerHTML = item.likes   
+        heart.setAttribute('class', 'numberLike')     
         coeurVide = document.createElement('p')
+        coeurVide.setAttribute('class', 'coeurVide')
         coeur = document.createElement('p')
+        coeur.setAttribute('class', 'coeur')
         coeurVide.innerHTML = '<i class="far fa-heart"></i>'        
         coeur.innerHTML = '<i class="fas fa-heart"></i>'
         coeur.style.display = 'none'
@@ -139,47 +142,33 @@ function afficherPhotos (match, photograph) {
         
     })
 
-    //click coeur plein(liké)
-    const allCoeur = document.querySelectorAll('.fas')
-    console.log(allCoeur);
-    allCoeur.forEach(element => {
-        element.addEventListener('click', e=>{
-            coeurVide.style.display = 'block'
-            coeur.style.display = 'none'
-            console.log(e.target);
-        })
-    });
+  
+    
 
-    // click coeur vide (pas liké)
-    const allCoeurVide = document.querySelectorAll('.far')
-    console.log(allCoeurVide);
-    allCoeurVide.forEach(element => {
-        element.addEventListener('click', e=>{
-            coeurVide.style.display = 'none'
-            coeur.style.display = 'block'
-            console.log(e.path[2].id);
-        })
-    });
-
-
-    console.log(arrayLikes);
+    
 }
 
 
 
 function afficherLightbox (photograph) {
     const media = secDiv.querySelectorAll('img, video')
-    console.log(media);
     
     let currentMedia;
+    let courantIndex;
+
+
+
     media.forEach( (element, index) => {
         element.addEventListener('click', e =>{
             // console.log(e);
             lightbox.classList.add('active')
             currentMedia = element.cloneNode(true)
-            let title = photograph.title
+            let title = e.target.parentNode.querySelector('p').cloneNode(true)
+            while (boxContainer.firstChild) {
+                boxContainer.removeChild(boxContainer.firstChild)
+            }
             boxContainer.appendChild(currentMedia)
-            // console.log(e.target.parentNode);
+            boxContainer.appendChild(title)
 
             nextLightbox.addEventListener('click', ()=>{
                 // let media2 = Array.from(media)
@@ -188,21 +177,22 @@ function afficherLightbox (photograph) {
                 console.log(currentMedia)
                 // console.log(currentMedia.target)
                 // console.log(media2.indexOf(currentMedia))
-                let courantIndex = index + 1;
+                courantIndex = index + 1;
                 if(media.length <= courantIndex){
                     courantIndex = 0;
                 }
-               
-                
+                boxContainer.removeChild(boxContainer.firstChild)
                 let base = media[courantIndex]
+                currentMedia = base.cloneNode(true)
                 console.log(base)
-                // currentMedia.src = media[(media.indexOf(currentMedia) +1) || 0]
-                // console.log(media2[(media2.indexOf(currentMedia) +1) || 0])
+                console.log(currentMedia);
+                boxContainer.appendChild(currentMedia)
             })
         })
         
     })
 }
+
 
 
 
@@ -291,31 +281,76 @@ function triData (match, triBtn) {
 
 
 
-function afficherLikePrix(match, photograph, facto) {
+function afficherLikePrix(match, photograph) {
     //like
-    
-    totalLikes = function(){
-        var total = 0;
-        for (let i = 0; i < match.length; i++) {
-        total = total + match[i].likes;        
-        }
-        return total;
-    }
-    console.log(totalLikes(match));
+
+    // const getLike = document.querySelectorAll('.numberLike')
+    // console.log(getLike);
+    // // console.log(Number(getLike[1]));
+
+    // x = Number(getLike[1].textContent) + 1;
+    // console.log(x);
+
+    // getLike.forEach(element =>{
+    //     element.addEventListener('click', e =>{
+    //         console.log('rr');
+    //     })
+    // })
+
+
+    let list =  Array.from(document.querySelectorAll('.numberLike'));
+    let total = list.reduce((total,value) => (total += Number(value.textContent)),0);
+    console.log(total);
 
     let sumLike = document.createElement('p')
-    sumLike.innerHTML = totalLikes(match)
+    sumLike.innerHTML = total + '&nbsp <i class="fas fa-heart"></i>'
     info.appendChild(sumLike)
+
+
+
+
+
+
+
+    // click coeur vide (pas liké)
+    const allCoeurVide = document.querySelectorAll('.far')
+    allCoeurVide.forEach(element => {
+        element.addEventListener('click', e=>{
+            e.target.parentNode.parentNode.querySelector('.numberLike').innerHTML = Number(e.path[2].querySelector('.numberLike').textContent)+1;
+            e.target.parentNode.parentNode.querySelector('.coeur').style.display = 'block'
+            e.target.parentNode.style.display = 'none'
+            total = total +1
+            sumLike.innerHTML = total + '&nbsp <i class="fas fa-heart"></i>'
+        })
+    });
+
+    //click coeur plein(liké)
+    const allCoeur = document.querySelectorAll('.fas')
+    allCoeur.forEach(element => {
+        element.addEventListener('click', e=>{
+            e.target.parentNode.parentNode.querySelector('.coeurVide').style.display = 'block'
+            e.target.parentNode.style.display = 'none'
+            e.target.parentNode.parentNode.querySelector('.numberLike').innerHTML = Number(e.path[2].querySelector('.numberLike').textContent)-1;
+            total = total -1
+            sumLike.innerHTML = total + '&nbsp <i class="fas fa-heart"></i>'
+        })
+    });
+
+
+
+
+
+
+
+
+    
+    
+
+    
 
     // modification nombre de like
 
     ///ajout de like
-    const ok = document.getElementById('header')
-    op = ok.querySelector('img')
-    console.log(op);
-    op.addEventListener('click', e=>{
-        totalLikes()
-    })
     // const bb = afficherPhotos(facto)
     // console.log(bb);
 
