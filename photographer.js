@@ -35,23 +35,22 @@ fetch('data.json').then(response => {
 
 
     // ///lightbox
-    afficherLightbox(photograph)
+    // afficherLightbox()
 
     // console.log(match.indexOF(1));
     
-    //fermeture lightbox avec la croix
-    closeLightbox.addEventListener('click', e => {
-        lightbox.classList.remove('active')
-    })
-   
+    
     // triBtn.addEventListener('change', triData())
     triBtn.addEventListener('change', () => {
         triData(match , triBtn);
         afficherPhotos(match, photograph)
+        lanchLigthbox()
+        afficherLikePrix(photograph)
     })
     
+    zzz()
 
-    afficherLikePrix(match, photograph)
+    afficherLikePrix(photograph)
 
 }).catch(error=> {
     console.error(error)
@@ -149,49 +148,102 @@ function afficherPhotos (match, photograph) {
 }
 
 
+function zzz() {
+    window.onload = () =>{
+        lanchLigthbox();
+    }
 
-function afficherLightbox (photograph) {
-    const media = secDiv.querySelectorAll('img, video')
-    
-    let currentMedia;
-    let courantIndex;
-
-
-
-    media.forEach( (element, index) => {
-        element.addEventListener('click', e =>{
-            // console.log(e);
-            lightbox.classList.add('active')
-            currentMedia = element.cloneNode(true)
-            let title = e.target.parentNode.querySelector('p').cloneNode(true)
-            while (boxContainer.firstChild) {
-                boxContainer.removeChild(boxContainer.firstChild)
-            }
-            boxContainer.appendChild(currentMedia)
-            boxContainer.appendChild(title)
-
-            nextLightbox.addEventListener('click', ()=>{
-                // let media2 = Array.from(media)
-                // console.log(media2)
-                // console.log(media2[2])
-                console.log(currentMedia)
-                // console.log(currentMedia.target)
-                // console.log(media2.indexOf(currentMedia))
-                courantIndex = index + 1;
-                if(media.length <= courantIndex){
-                    courantIndex = 0;
-                }
-                boxContainer.removeChild(boxContainer.firstChild)
-                let base = media[courantIndex]
-                currentMedia = base.cloneNode(true)
-                console.log(base)
-                console.log(currentMedia);
-                boxContainer.appendChild(currentMedia)
-            })
-        })
-        
-    })
 }
+
+function lanchLigthbox(){
+    let gallery = secDiv.querySelectorAll('img, video')
+    console.log(gallery);
+    maxIndex = gallery.length - 1
+    console.log(maxIndex);
+    for (let i = 0; i < gallery.length; i++) {
+        let newIndex = i;
+        let clickImgIndex;
+       gallery[i].onclick = ()=>{
+           clickImgIndex = newIndex;
+           console.log(i);
+           lightbox.classList.add('active')
+
+           function changeImage() {
+                // console.log('ChangeImage index ' + newIndex);
+               let selected = gallery[newIndex].cloneNode(true)
+            //    console.log(boxContainer)
+               boxContainer.innerHTML = "";
+               let title = gallery[newIndex].parentNode.querySelector('p').cloneNode(true)
+               boxContainer.appendChild(selected)
+               console.log(selected, title);
+           }
+           changeImage();
+
+           prevLightbox.onclick = ()=>{
+                // console.log('first index ' + newIndex);
+               newIndex--;
+                //    console.log('after index ' + newIndex);
+               if (newIndex <= 0) {
+                   newIndex = maxIndex;
+                //    console.log('Change index ' + newIndex);
+               } 
+               changeImage();
+            }
+
+           nextLightbox.onclick = ()=>{
+               newIndex++;
+               if (newIndex > maxIndex) {
+                   newIndex = 0;
+               }
+               changeImage()
+            }
+            closeLightbox.onclick = ()=>{
+                newIndex = clickImgIndex;
+                lightbox.classList.remove('active')
+            }
+        }
+        
+    }
+}
+
+
+
+// function afficherLightbox () {
+//     const media = secDiv.querySelectorAll('img, video')     
+//     let currentMedia;
+//     let courantIndex;
+//     media.forEach( (element, index) => {
+//         element.addEventListener('click', e =>{
+//             // console.log(e);
+//             lightbox.classList.add('active')
+//             currentMedia = element.cloneNode(true)
+//             let title = e.target.parentNode.querySelector('p').cloneNode(true)
+//             while (boxContainer.firstChild) {
+//                 boxContainer.removeChild(boxContainer.firstChild)
+//             }
+//             boxContainer.appendChild(currentMedia)
+//             boxContainer.appendChild(title)
+//             console.log(index);
+//         })
+//     })
+//     nextLightbox.addEventListener('click', ()=>{
+//         let media2 = Array.from(media)
+//         console.log(media2)
+//         console.log(media2[2])
+//         console.log(currentMedia)
+//         console.log(currentMedia.target)
+//         console.log(media2.indexOf(currentMedia))
+//         // courantIndex = index + 1;
+//         if(media.length <= courantIndex){
+//             courantIndex = 0;
+//         }
+//         boxContainer.removeChild(boxContainer.firstChild)
+//         let base = media[courantIndex]
+//         // currentMedia = base.cloneNode(true)
+//         console.log(e)
+//         boxContainer.appendChild(currentMedia)
+//     })
+// }
 
 
 
@@ -281,36 +333,15 @@ function triData (match, triBtn) {
 
 
 
-function afficherLikePrix(match, photograph) {
+function afficherLikePrix(photograph) {
     //like
-
-    // const getLike = document.querySelectorAll('.numberLike')
-    // console.log(getLike);
-    // // console.log(Number(getLike[1]));
-
-    // x = Number(getLike[1].textContent) + 1;
-    // console.log(x);
-
-    // getLike.forEach(element =>{
-    //     element.addEventListener('click', e =>{
-    //         console.log('rr');
-    //     })
-    // })
-
-
+    info.innerHTML = ""
     let list =  Array.from(document.querySelectorAll('.numberLike'));
     let total = list.reduce((total,value) => (total += Number(value.textContent)),0);
-    console.log(total);
 
     let sumLike = document.createElement('p')
     sumLike.innerHTML = total + '&nbsp <i class="fas fa-heart"></i>'
     info.appendChild(sumLike)
-
-
-
-
-
-
 
     // click coeur vide (pas liké)
     const allCoeurVide = document.querySelectorAll('.far')
@@ -336,27 +367,10 @@ function afficherLikePrix(match, photograph) {
         })
     });
 
-
-
-
-
-
-
-
-    
-    
-
-    
-
-    // modification nombre de like
-
-    ///ajout de like
-    // const bb = afficherPhotos(facto)
-    // console.log(bb);
-
     //prix
     let prix = document.createElement('p')
-    prix.innerHTML = photograph.price + '€/jour'
+    prix.innerHTML = photograph.price + '€ / jour'
+    
     info.appendChild(prix)
 
        
