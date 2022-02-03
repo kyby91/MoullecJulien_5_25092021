@@ -18,12 +18,17 @@
 html {
   width: 100%;
   font-family: "DMSans";
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  width: 90%;
 }
 
 #header {
   margin-bottom: 50px;
   margin-top: 50px;
-  margin-left: 100px;
 }
 #header img {
   width: 200px;
@@ -36,8 +41,9 @@ main {
   margin-bottom: 50px;
 }
 main label {
-  font-family: "DMSans";
-  margin-left: 100px;
+  font-family: "DMSans-Bold";
+  font-size: 19px;
+  margin-right: 15px;
 }
 main select {
   width: 10%;
@@ -48,15 +54,19 @@ main select {
   border: none;
   font-family: "DMSans-Bold";
   font-size: 18px;
-  margin-left: 100px;
   margin-bottom: 50px;
+}
+main select option {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
 #Photos {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 100px;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
 }
 #Photos .photo-container {
@@ -91,10 +101,9 @@ main select {
 .photograph-header {
   background-color: #FAFAFA;
   height: 300px;
-  margin: 0 100px;
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 100%;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 100px;
@@ -112,6 +121,7 @@ main select {
 }
 .photograph-header #photograph-info {
   order: -1;
+  margin-left: -4%;
 }
 .photograph-header #photograph-info h1 {
   font-size: 64px;
@@ -224,7 +234,7 @@ form input {
   height: 100%;
   border: none;
   position: relative;
-  left: 1155px;
+  left: 1160px;
   margin-top: -14px;
   z-index: 511;
   text-indent: -30000px;
@@ -233,7 +243,7 @@ form input {
 
 #lightbox__prev {
   right: auto;
-  left: -5px;
+  left: -10px;
   transform: rotate(180deg);
   text-indent: -30000px;
 }
@@ -241,12 +251,12 @@ form input {
 #lightbox__close {
   width: 50px;
   height: 50px;
-  background: url(closelght.svg) center center/100% 100% no-repeat;
+  background: url(closelght.svg) center center/40px 40px no-repeat;
   border: none;
   position: relative;
   text-indent: -30000px;
-  bottom: 464px;
-  left: 1200px;
+  bottom: 465px;
+  left: 1210px;
   cursor: pointer;
   z-index: 515;
 }
@@ -267,7 +277,8 @@ form input {
   width: 90%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  position: absolute;
+  left: 22%;
   align-items: center;
 }
 
@@ -301,7 +312,8 @@ form input {
   border-radius: 10px;
   padding-left: 20px;
   padding-right: 20px;
-  font-size: normal;
+  font-size: 20px;
+  font-family: "DMSans-Bold";
 }
 #like-prix p {
   margin-right: 30px;

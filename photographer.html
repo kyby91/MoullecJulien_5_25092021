@@ -10,18 +10,20 @@
   </head>
   <body>
     <header id="header">
-      <img src="logo.png" class="logo" />
+      <a href="index.html"><img src="logo.png" class="logo" /></a>      
     </header>
     <main id="main">
       <div class="photograph-header">
         <button id="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
-      <label for="tri-select">Trier par</label>
-      <select name="tri" id="tri-select">
-        <option value="Popularité" >Popularité</option>
-        <option value="Date" selected>Date</option>
-        <option value="Titre">Titre</option>
-      </select>
+      <div id="selecteur">
+        <label for="tri-select">Trier par</label>
+        <select name="tri" id="tri-select">
+          <option value="Popularité" >Popularité</option>
+          <option value="Date" selected>Date</option>
+          <option value="Titre">Titre</option>
+        </select>
+      </div>
       <div id="Photos"></div>
     </main>
     <div id="contact_modal">

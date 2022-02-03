@@ -4,51 +4,30 @@ fetch('data.json').then(response => {
     const photographers = data.photographers;
     renderPhotographe(photographers)
 
-    const tags = document.querySelectorAll('nav div')
+    // const tags = document.querySelectorAll('nav div')
 
-    tags.forEach(element => {
-        element.addEventListener('click' , (e) =>{
-          console.log(e.target)
-          let myTag = e.target.dataset.tag
-          let active = e.target.classList
+    // tags.forEach(element => {
+    //     element.addEventListener('click' , (e) =>{
+    //       console.log(e.target)
+    //       let myTag = e.target.dataset.tag
+    //       let active = e.target.classList
 
-          console.log(tags)
+    //       console.log(tags)
 
-          if (Array.from(element.classList).includes('active')) {
-            renderPhotographe(photographers)
-            active.remove('active')
-          } else {
-            let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
-            console.log(match)
-            tags.forEach(element=> {
-              element.classList.remove('active')
-            })
-            active.add('active')
-            renderPhotographe(match)
-          }
-
-
-
-        //Vérifeir si e.target a la class active
-          //TRUE -> Réunitilaliser a zéro
-            // renderPhotographe(photographers)
-          //FALSE
-            // const tags = document.querySelectorAll('nav div')
-            //Suppirmer les classe active
-            //add class active cliqué e.target
-
-                    // [ 'test', 'portrait']  ('test')        si portrait == test
-            
-            // let match = photographers.filter(function(element) {
-            //   for (let i = 0; i < element.tags.length; i++) {
-            //     if (element.tags[i] === 'travel') {
-            //       console.log(element)
-            //       return element;
-            //     }
-            //   }
-            // });
-        })
-    });
+    //       if (Array.from(element.classList).includes('active')) {
+    //         renderPhotographe(photographers)
+    //         active.remove('active')
+    //       } else {
+    //         let match = photographers.filter( photographer => photographer.tags.includes(myTag) ) 
+    //         console.log(match)
+    //         tags.forEach(element=> {
+    //           element.classList.remove('active')
+    //         })
+    //         active.add('active')
+    //         renderPhotographe(match)
+    //       }
+    //     })
+    // });
 
 
 
@@ -79,6 +58,7 @@ function renderPhotographe(photographers){
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photographer.portrait
+    profilepicture.setAttribute('alt', photographer.name)
     div.appendChild(profilepicture)
 
     let h2 = document.createElement('h2')
@@ -100,15 +80,15 @@ function renderPhotographe(photographers){
     price.innerHTML = photographer.price +'€/jour'
     div.appendChild(price)
 
-    let div1 = document.createElement('div')
-    div1.setAttribute('class', 'filter')
-    photographer.tags.forEach(tag => {
-      let t = document.createElement('p');
-      t.innerHTML = '#' + tag;
-      div1.appendChild(t)
-    });
+    // let div1 = document.createElement('div')
+    // div1.setAttribute('class', 'filter')
+    // photographer.tags.forEach(tag => {
+    //   let t = document.createElement('p');
+    //   t.innerHTML = '#' + tag;
+    //   div1.appendChild(t)
+    // });
     
-    div.appendChild(div1)
+    // div.appendChild(div1)
 
     document.getElementById("main").appendChild(lien)
   });

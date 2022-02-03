@@ -37,7 +37,6 @@ fetch('data.json').then(response => {
     // ///lightbox
     // afficherLightbox()
 
-    // console.log(match.indexOF(1));
     
     
     // triBtn.addEventListener('change', triData())
@@ -97,6 +96,7 @@ function afficherPhotos (match, photograph) {
     match.forEach( (item , index) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
+        mediaElt.setAttribute('alt', item.title)
         // Conception de la suite de HTML (Carte media)
         let div3 = document.createElement('div')
         div3.setAttribute('class', 'photo-container')
@@ -157,35 +157,27 @@ function zzz() {
 
 function lanchLigthbox(){
     let gallery = secDiv.querySelectorAll('img, video')
-    console.log(gallery);
-    maxIndex = gallery.length - 1
-    console.log(maxIndex);
+    maxIndex = gallery.length - 1;
     for (let i = 0; i < gallery.length; i++) {
         let newIndex = i;
         let clickImgIndex;
-       gallery[i].onclick = ()=>{
+        gallery[i].onclick = ()=>{
            clickImgIndex = newIndex;
-           console.log(i);
            lightbox.classList.add('active')
 
            function changeImage() {
-                // console.log('ChangeImage index ' + newIndex);
                let selected = gallery[newIndex].cloneNode(true)
-            //    console.log(boxContainer)
                boxContainer.innerHTML = "";
                let title = gallery[newIndex].parentNode.querySelector('p').cloneNode(true)
                boxContainer.appendChild(selected)
-               console.log(selected, title);
-           }
+               boxContainer.appendChild(title)
+            }
            changeImage();
 
            prevLightbox.onclick = ()=>{
-                // console.log('first index ' + newIndex);
-               newIndex--;
-                //    console.log('after index ' + newIndex);
-               if (newIndex <= 0) {
-                   newIndex = maxIndex;
-                //    console.log('Change index ' + newIndex);
+               newIndex--
+               if (newIndex < 0) {
+                   newIndex = maxIndex
                } 
                changeImage();
             }
@@ -206,44 +198,6 @@ function lanchLigthbox(){
     }
 }
 
-
-
-// function afficherLightbox () {
-//     const media = secDiv.querySelectorAll('img, video')     
-//     let currentMedia;
-//     let courantIndex;
-//     media.forEach( (element, index) => {
-//         element.addEventListener('click', e =>{
-//             // console.log(e);
-//             lightbox.classList.add('active')
-//             currentMedia = element.cloneNode(true)
-//             let title = e.target.parentNode.querySelector('p').cloneNode(true)
-//             while (boxContainer.firstChild) {
-//                 boxContainer.removeChild(boxContainer.firstChild)
-//             }
-//             boxContainer.appendChild(currentMedia)
-//             boxContainer.appendChild(title)
-//             console.log(index);
-//         })
-//     })
-//     nextLightbox.addEventListener('click', ()=>{
-//         let media2 = Array.from(media)
-//         console.log(media2)
-//         console.log(media2[2])
-//         console.log(currentMedia)
-//         console.log(currentMedia.target)
-//         console.log(media2.indexOf(currentMedia))
-//         // courantIndex = index + 1;
-//         if(media.length <= courantIndex){
-//             courantIndex = 0;
-//         }
-//         boxContainer.removeChild(boxContainer.firstChild)
-//         let base = media[courantIndex]
-//         // currentMedia = base.cloneNode(true)
-//         console.log(e)
-//         boxContainer.appendChild(currentMedia)
-//     })
-// }
 
 
 
@@ -277,8 +231,6 @@ function factoryMediaElt() {
         }
         return elt;
 
-        // console.log(elt)
-        // If image ou vidéo (HTML)
     }
 
     return {
@@ -292,14 +244,11 @@ function factoryMediaElt() {
 
 
 function triData (match, triBtn) {
-    console.log('ok')
     document.getElementById("Photos").innerHTML = "";
     
     // let triBtnElt = document.getElementById('tri-select')
     // var value = triBtnElt.options[triBtnElt.selectedIndex].value;
     var value = triBtn.options[triBtn.selectedIndex].value;
-    console.log(value)
-    console.log(match)
 
     if (value === 'Date') {
         function SortArray(x, y){
@@ -308,7 +257,6 @@ function triData (match, triBtn) {
             return 0;
         }
         match = match.sort(SortArray);
-        console.log(match);
 
     } else if (value === 'Popularité') {
         function SortArray(x, y){
@@ -317,7 +265,6 @@ function triData (match, triBtn) {
             return 0;
         }
         match = match.sort(SortArray);
-        console.log(match);
 
     } else if (value === 'Titre') {
 
@@ -327,7 +274,6 @@ function triData (match, triBtn) {
             return 0;
         }
         match = match.sort(SortArray);
-        console.log(match);
     }
 }
 
