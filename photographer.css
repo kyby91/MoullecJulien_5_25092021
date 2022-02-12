@@ -10,10 +10,13 @@
 #contact_modal {
   display: none;
   position: fixed;
-  top: 20px;
+  top: 10px;
   left: 25%;
   width: 1200px;
   justify-self: center;
+}
+#contact_modal h2 {
+  font-size: 52px;
 }
 
 html {
@@ -180,6 +183,12 @@ form label {
 #modal-input {
   width: 100%;
   margin-bottom: 26px;
+  margin-top: -30px;
+}
+#modal-input input {
+  font-size: 40px;
+  padding-left: 10px;
+  overflow-wrap: break-word;
 }
 
 form input {
@@ -212,7 +221,7 @@ form input {
   height: 100%;
   border: none;
   position: relative;
-  left: 1160px;
+  left: 930px;
   margin-top: -14px;
   z-index: 511;
   text-indent: -30000px;
@@ -233,8 +242,8 @@ form input {
   border: none;
   position: relative;
   text-indent: -30000px;
-  bottom: 465px;
-  left: 1210px;
+  bottom: 365px;
+  left: 975px;
   cursor: pointer;
   z-index: 515;
 }
@@ -252,12 +261,13 @@ form input {
   display: none;
 }
 #lightbox #container {
-  width: 90%;
+  width: 100%;
   height: 100%;
   display: flex;
   position: absolute;
-  left: 15%;
   align-items: center;
+  justify-content: center;
+  margin-right: 200px;
 }
 
 #lightbox.active {
@@ -269,8 +279,8 @@ form input {
   flex-direction: column;
 }
 #lightbox__container img, #lightbox__container video {
-  width: 1050px;
-  height: 900px;
+  width: 815px;
+  height: 700px;
   object-fit: cover;
   border-radius: 5px;
   order: -1;
