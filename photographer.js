@@ -125,11 +125,11 @@ function afficherInfo (photograph){
 
 function afficherPhotos (match, photograph) {
     const facto = factoryMediaElt(match)
-    let coeurVide 
-    let coeur 
-    let divlike
-    let heart
-    let arrayLikes = {}
+    let coeurVide;
+    let coeur;
+    let divlike;
+    let heart;
+    let arrayLikes = {};
     match.forEach( (item) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
