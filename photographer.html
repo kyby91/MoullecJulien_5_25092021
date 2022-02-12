@@ -10,27 +10,17 @@
   </head>
   <body>
     <header id="header">
-      <a href="index.html"><img src="logo.png" class="logo" /></a>      
+      <a href="index.html"><img src="icon/logo.png" class="logo" /></a>      
     </header>
     <main id="main">
       <div class="photograph-header">
         <button id="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
-      <div id="selecteur">
-        <label for="tri-select">Trier par</label>
-        <select name="tri" id="tri-select">
-          <option value="Popularité" >Popularité</option>
-          <option value="Date" selected>Date</option>
-          <option value="Titre">Titre</option>
-        </select>
-      </div>
-      <div id="Photos"></div>
-    </main>
-    <div id="contact_modal">
+      <div id="contact_modal">
 			<div class="modal">
 				<header>
           <h2 id="contact"></h2>
-          <img src="close.svg" onclick="closeModal()" />
+          <img src="icon/close.svg" onclick="closeModal()" />
         </header>
 				<form id="modal-form" onsubmit="return checkGlobalValidation()">
 					<div id='modal-input'>
@@ -53,13 +43,44 @@
         </section>
 			</div>
 		</div>
+      <div class="custom-select">
+        <ul class="select">
+          <li>
+            <input class="select_close" type="radio" name="customselect" id="customselect-close" value="" />
+            <span class="select_label select_label-placeholder" >Popularité</span>
+          </li>
+      
+          <li class="select_items">
+            <input class="select_expand" type="radio" name="customselect" id="customselect-opener" />
+            <label class="select_closeLabel" for="customselect-close"></label>
+      
+            <ul class="select_options">
+              <li class="select_option">
+                <input class="select_input" type="radio" name="customselect" id="customselect-date" />
+                <label class="select_label" for="customselect-date"><span class="border-top" tabindex="0">Date</span></label>
+              </li>
+      
+              <li class="select_option">
+                <input class="select_input" type="radio" name="customselect" id="customselect-titre" />
+                <label class="select_label" for="customselect-titre"><span class="border-top" tabindex="0">Titre</span></label>
+              </li>
+      
+            </ul>
+      
+            <label class="select_expandLabel" for="customselect-opener"></label>
+          </li>
+        </ul>
+      </div>
+      <div id="Photos"></div>
+    </main>
+    
     <div id="lightbox">
       <div id="container">
         <button id="lightbox__close">Fermer</button>
         <button id="lightbox__next">Suivant</button>
         <button id="lightbox__prev">Précédent</button>
         <div id="lightbox__container">
-          <p>hebhfbde</p>
+          <p></p>
         </div>
       </div>
     </div>

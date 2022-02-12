@@ -12,6 +12,9 @@ const nextLightbox = document.getElementById ('lightbox__next')
 const prevLightbox = document.getElementById('lightbox__prev')
 let triBtn = document.getElementById('tri-select')
 const info = document.getElementById('like-prix')
+let titreBtn = document.getElementById('customselect-titre')
+let dateBtn = document.getElementById('customselect-date')
+let likeBtn = document.getElementById('customselect-close')
 
 
 fetch('data.json').then(response => {
@@ -24,31 +27,64 @@ fetch('data.json').then(response => {
     afficherInfo(photograph)
 
 
-    //affichage de ses photos + lightbox
+    //affichage de ses photos
     const photos = data.media
     let match = photos.filter( photo => photo.photographerId == urlId )
-    afficherPhotos(match, photograph) 
+    function SortArray(x, y){
+        if (x.likes > y.likes) {return -1;}
+        if (x.likes < y.likes) {return 1;}
+        return 0;
+    }
+    match = match.sort(SortArray);
+    afficherPhotos(match, photograph)
+     
 
 
     //Contact ajout nom
     contact.innerText = 'Contactez-moi' + ' ' +  photograph.name
 
-
-    // ///lightbox
     // afficherLightbox()
-
-    
+    displayLightbox()
     
     // triBtn.addEventListener('change', triData())
-    triBtn.addEventListener('change', () => {
-        triData(match , triBtn);
+    titreBtn.addEventListener('click', () => {
+        // triData(match , triBtn);
+        titre(match)
         afficherPhotos(match, photograph)
-        lanchLigthbox()
+        launchLigthbox()
         afficherLikePrix(photograph)
+        
+    })
+    titreBtn.addEventListener('keydown',function(event){
+        if(event.key === "Enter"){
+            titre(match)
+            afficherPhotos(match, photograph)
+            launchLigthbox()
+            afficherLikePrix(photograph)
+        }
+    })
+
+    dateBtn.addEventListener('click', () => {
+        // triData(match , triBtn);
+        date(match)
+        afficherPhotos(match, photograph)
+        launchLigthbox()
+        afficherLikePrix(photograph)
+        
     })
     
-    zzz()
 
+    likeBtn.addEventListener('click', () => {
+        // triData(match , triBtn);
+        like(match)
+        afficherPhotos(match, photograph)
+        launchLigthbox()
+        afficherLikePrix(photograph)
+        
+    })
+    
+    
+    //Afficher prix/like
     afficherLikePrix(photograph)
 
 }).catch(error=> {
@@ -80,6 +116,7 @@ function afficherInfo (photograph){
 
     let profilepicture = document.createElement('img')
     profilepicture.src = '/SamplePhotos/PhotographersIDPhotos/' + photograph.portrait 
+    profilepicture.setAttribute('alt', photograph.name)
     div2.appendChild(profilepicture)
 
 }
@@ -93,20 +130,21 @@ function afficherPhotos (match, photograph) {
     let divlike
     let heart
     let arrayLikes = {}
-    match.forEach( (item , index) => {
+    match.forEach( (item) => {
         // Element image or vidéo
         let mediaElt = facto.choiceElt(item , photograph)
         mediaElt.setAttribute('alt', item.title)
+        mediaElt.setAttribute('tabindex', '0')
+        mediaElt.setAttribute('onkeydown', 'launchLigthbox()')
         // Conception de la suite de HTML (Carte media)
-        let div3 = document.createElement('div')
+        let div3 = document.createElement('a')
         div3.setAttribute('class', 'photo-container')
-        div3.setAttribute('data-index', index)
         secDiv.appendChild(div3)
 
         let description = document.createElement('p')
         description.innerHTML = item.title
 
-        //div like
+        //div like  
         heart = document.createElement('p')
         heart.innerHTML = item.likes   
         heart.setAttribute('class', 'numberLike')     
@@ -138,30 +176,29 @@ function afficherPhotos (match, photograph) {
         divlike.appendChild(heart)
         divlike.appendChild(coeur)
         divlike.appendChild(coeurVide)
-        
     })
 
-  
+    
     
 
     
 }
 
 
-function zzz() {
+function displayLightbox() {
     window.onload = () =>{
-        lanchLigthbox();
+        launchLigthbox();
     }
 
 }
 
-function lanchLigthbox(){
+function launchLigthbox(){
     let gallery = secDiv.querySelectorAll('img, video')
     maxIndex = gallery.length - 1;
     for (let i = 0; i < gallery.length; i++) {
         let newIndex = i;
         let clickImgIndex;
-        gallery[i].onclick = ()=>{
+        function display (){
            clickImgIndex = newIndex;
            lightbox.classList.add('active')
 
@@ -181,6 +218,7 @@ function lanchLigthbox(){
                } 
                changeImage();
             }
+         
 
            nextLightbox.onclick = ()=>{
                newIndex++;
@@ -189,12 +227,45 @@ function lanchLigthbox(){
                }
                changeImage()
             }
+
+            document.onkeydown = function Left (e) {
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        newIndex--
+                        if (newIndex < 0) {
+                        newIndex = maxIndex
+                        } 
+                        changeImage();
+                        break;
+                    case 'ArrowRight':
+                        newIndex++;
+                        if (newIndex > maxIndex) {
+                            newIndex = 0;
+                        }
+                        changeImage()
+                        break;
+                }
+            };
+
+
             closeLightbox.onclick = ()=>{
                 newIndex = clickImgIndex;
                 lightbox.classList.remove('active')
             }
+            document.addEventListener('keydown', function(event){
+                if(event.key === "Escape"){
+                    lightbox.classList.remove('active')
+                }
+            });
         }
-        
+        gallery[i].onclick = ()=>{
+           display()
+        }
+        gallery[i].addEventListener('keydown',function(event){
+            if(event.key === "Enter"){
+                display()
+            }
+        })
     }
 }
 
@@ -224,7 +295,6 @@ function factoryMediaElt() {
     function choiceElt(match , photograph){
         let elt;
         if(match.image){   
-            // elt = 'image'
             elt = this.eltImage(match , photograph)
         }else{
             elt = this.eltVideo(match , photograph)
@@ -240,44 +310,6 @@ function factoryMediaElt() {
     }
 
 }
-
-
-
-function triData (match, triBtn) {
-    document.getElementById("Photos").innerHTML = "";
-    
-    // let triBtnElt = document.getElementById('tri-select')
-    // var value = triBtnElt.options[triBtnElt.selectedIndex].value;
-    var value = triBtn.options[triBtn.selectedIndex].value;
-
-    if (value === 'Date') {
-        function SortArray(x, y){
-            if (x.date > y.date) {return -1;}
-            if (x.date < y.date) {return 1;}
-            return 0;
-        }
-        match = match.sort(SortArray);
-
-    } else if (value === 'Popularité') {
-        function SortArray(x, y){
-            if (x.likes > y.likes) {return -1;}
-            if (x.likes < y.likes) {return 1;}
-            return 0;
-        }
-        match = match.sort(SortArray);
-
-    } else if (value === 'Titre') {
-
-        function SortArray(x, y){
-            if (x.title < y.title) {return -1;}
-            if (x.title > y.title) {return 1;}
-            return 0;
-        }
-        match = match.sort(SortArray);
-    }
-}
-
-
 
 function afficherLikePrix(photograph) {
     //like
@@ -321,3 +353,36 @@ function afficherLikePrix(photograph) {
 
        
 }
+
+
+// fonction pour tri
+function titre (match) {
+    document.getElementById("Photos").innerHTML = "";
+    function SortArray(x, y){
+        if (x.title < y.title) {return -1;}
+        if (x.title > y.title) {return 1;}
+        return 0;
+    }
+    match = match.sort(SortArray);
+}
+
+function date (match) {
+    document.getElementById("Photos").innerHTML = "";
+    function SortArray(x, y){
+        if (x.date < y.date) {return -1;}
+        if (x.date > y.date) {return 1;}
+        return 0;
+    }
+    match = match.sort(SortArray);
+}
+
+function like (match) {
+    document.getElementById("Photos").innerHTML = "";
+    function SortArray(x, y){
+        if (x.likes > y.likes) {return -1;}
+        if (x.likes < y.likes) {return 1;}
+        return 0;
+    }
+    match = match.sort(SortArray);
+}
+

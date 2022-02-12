@@ -1,0 +1,20 @@
+{
+  "name": "p5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.css",
+  "scripts": {
+    "sass": "sass --watch ./photograph.scss:./photographer.css",
+    "build": "sass --watch ./main.scss:./style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyby91/MoullecJulien_5_25092021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyby91/MoullecJulien_5_25092021/issues"
+  },
+  "homepage": "https://github.com/kyby91/MoullecJulien_5_25092021#readme"
+}
