@@ -115,7 +115,7 @@ function afficherInfo (photograph){
     firstDiv.appendChild(div2)
 
     let profilepicture = document.createElement('img')
-    profilepicture.src = 'icon/SamplePhotos/PhotographersIDPhotos/' + photograph.portrait 
+    profilepicture.src = 'SamplePhotos/PhotographersIDPhotos/' + photograph.portrait 
     profilepicture.setAttribute('alt', photograph.name)
     div2.appendChild(profilepicture)
 
