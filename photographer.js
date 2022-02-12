@@ -280,14 +280,14 @@ function factoryMediaElt() {
         let picture = document.createElement('img')
         const words = photograph.name.split(' ')
         // picture.src = 'SamplePhotos/' + match.image
-        picture.src = 'icon/SamplePhotos/' + words[0] + '/' + match.image    
+        picture.src = 'SamplePhotos/' + words[0] + '/' + match.image    
         return picture;
     }
 
     function eltVideo(match , photograph){
         let video = document.createElement('video')
         const words = photograph.name.split(' ')
-        video.src = 'icon/SamplePhotos/' + words[0] + '/' + match.video
+        video.src = 'SamplePhotos/' + words[0] + '/' + match.video
         return video;
     }
 
